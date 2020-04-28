@@ -1,11 +1,15 @@
-# python2系を3系にするためのものなので、必要ない
-# from __future__ import print_function
 import keras
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization, ZeroPadding2D
+
+# TensorFlowとTheanoの両方に互換性のある抽象的なKerasバックエンドAPI(K)を作成
+# https://keras.io/ja/backend/
 from keras import backend as K
 import argparse
+
+# load_images.pyに学習データを返す関数あり
+# https://toxweblog.toxbe.com/2017/06/03/keras-face-learning/
 from load_images import load_images_from_labelFolder
  
 # 最初に定数を指定する
@@ -13,10 +17,11 @@ batch_size = 20　# 一度に学習するデータサイズ
 num_classes = 3　# 分類するラベル数
 epoch = 30　# 全データを何回学習するか
 
-# これなに？
+# inputする画像サイズ。このサイズで素材を切り抜き揃えておく
 img_rows, img_cols = 128, 128
- 
-# これなに？
+
+# 引数 -p にて指定のpathを参照するパーサーを作る
+# https://docs.python.org/ja/3.7/howto/argparse.html
 parser = argparse.ArgumentParser()
 parser.add_argument('--path', '-p', default='.\\images')
 args = parser.parse_args()　
@@ -24,7 +29,8 @@ args = parser.parse_args()　
 # データ読み込み testデータとtrainデータに分割する
 (x_train, y_train), (x_test, y_test) = load_images_from_labelFolder(args.path,img_cols, img_rows, train_test_ratio=(6,1))
 
-# これなに？
+# Kerasが従うデータのフォーマット規則を"channels_last" か "channels_first"のどちらかに指定する。
+# どうして以下のような場合分けを行うかはよくわかっていない
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
     x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
@@ -62,7 +68,7 @@ model.add(Conv2D(32, kernel_size=(3,3),
             activation='relu',
             # 一番最初の層にだけinput_shapeを指定する必要がある
             input_shape=input_shape))
-# MaxPooling2Dで出力をダウンスケールする。(2, 2)は画像をそれぞれの次元で半分にする
+# MaxPooling2Dでフィルタされた画像を圧縮し、出力をダウンスケールする。(2, 2)は画像をそれぞれの次元で半分にする
 # https://keras.io/ja/layers/pooling/
 model.add(MaxPooling2D(pool_size=(2, 2), strides=2))
 # Dropoutを設定し、過学習を防止する
@@ -100,6 +106,7 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 # モデルの概要を出力する。見て確認するためのもので、処理に影響はない
+# https://liaoyuan.hatenablog.jp/entry/2018/02/24/124442
 model.summary()
 
 # 学習済みモデルを保存
