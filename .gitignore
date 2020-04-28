@@ -1,0 +1,5 @@
+/.vscode/
+/pokemon_detector/
+.DS_Store
+/load_images.py
+/pokemon_prediction.py
