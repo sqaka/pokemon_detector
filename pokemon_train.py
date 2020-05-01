@@ -13,9 +13,9 @@ import argparse
 from load_images import load_images_from_labelFolder
  
 # 最初に定数を指定する
-batch_size = 20　# 一度に学習するデータサイズ
-num_classes = 3　# 分類するラベル数
-epoch = 30　# 全データを何回学習するか
+batch_size = 20 # 一度に学習するデータサイズ
+num_classes = 3 # 分類するラベル数
+epoch = 30 # 全データを何回学習するか
 
 # inputする画像サイズ。このサイズで素材を切り抜き揃えておく
 img_rows, img_cols = 128, 128
@@ -24,7 +24,7 @@ img_rows, img_cols = 128, 128
 # https://docs.python.org/ja/3.7/howto/argparse.html
 parser = argparse.ArgumentParser()
 parser.add_argument('--path', '-p', default='.\\images')
-args = parser.parse_args()　
+args = parser.parse_args()
  
 # データ読み込み testデータとtrainデータに分割する
 (x_train, y_train), (x_test, y_test) = load_images_from_labelFolder(args.path,img_cols, img_rows, train_test_ratio=(6,1))
@@ -60,7 +60,7 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 model = Sequential()
 
 # 中間層
-# Conv2D 3×3のフィルタを各マスにかけ、16枚の出力データを得られるように指定している
+# Conv2D 3×3のフィルタを各マスにかけ、32枚の出力データを得られるように指定している
 # kernel_size(フィルタ)の部分は省略可能　(Conv2D(32,(3,3))のように
 model.add(Conv2D(32, kernel_size=(3,3),
             # relu（Rectified Linear Unit）は、特徴を際立てるための活性化関数
@@ -78,15 +78,25 @@ model.add(Dropout(0.2))
 # ZeroPadding2Dは、画像のような2次元入力のためのレイヤーで、画像テンソルの上下左右にゼロの行と列を追加する
 # デフォルトが(1, 1)なので一旦これでよい https://keras.io/ja/layers/convolutional/
 model.add(ZeroPadding2D(padding=(1, 1)))
+# Conv2D 3×3のフィルタを各マスにかけ、96枚の出力データを得られるように指定している
 model.add(Conv2D(96, kernel_size=(3,3),activation='relu'))
+# MaxPooling2Dでフィルタされた画像を圧縮し、出力をダウンスケール
 model.add(MaxPooling2D(pool_size=(2, 2), strides=2))
+# Dropoutを設定し、過学習を防止する
 model.add(Dropout(0.2))
  
+# 画像テンソルの上下左右にゼロの行と列を追加する
 model.add(ZeroPadding2D(padding=(1, 1)))
+# Conv2D 3×3のフィルタを各マスにかけ、96枚の出力データを得られるように指定している
+# ここでは活性化関数reluを指定しない。なぜ？
 model.add(Conv2D(96, kernel_size=(3,3)))
+# MaxPooling2Dでフィルタされた画像を圧縮し、出力をダウンスケール
 model.add(MaxPooling2D(pool_size=(2, 2), strides=2))
+# 全結合層は2次元テンソルしか受け取れないため、4次元テンソルのPoolingを2次元テンソルに変換するFlatterレイヤーを挟む
+# https://qiita.com/yu4u/items/75ea0e5e1587f10bc014
 model.add(Flatten())
- 
+
+# 全結合層Denseレイヤー
 model.add(Dense(units=1024, activation='relu'))
 model.add(Dropout(rate=0.5))
 model.add(Dense(units=num_classes, activation='softmax'))
