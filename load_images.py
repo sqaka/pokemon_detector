@@ -8,8 +8,10 @@ import re
 def load_images_from_labelFolder(path, img_width, img_height, train_test_ratio=(9,1)):
     pathsAndLabels = []
     label_i = 0
+    # globでフォルダの中身をglobする
     data_list = glob.glob(path + '\\*')
-    datatxt = open('whoiswho.txt' ,'w')
+    # ラベル分けのtxtデータを読み込ませる
+    datatxt = open('label.txt' ,'w')
     print('data_list', data_list)
     for dataFolderName in data_list:
         pathsAndLabels.append([dataFolderName, label_i])
