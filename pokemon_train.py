@@ -23,7 +23,7 @@ img_rows, img_cols = 128, 128
 # 引数 -p にて指定のpathを参照するパーサーを作る
 # https://docs.python.org/ja/3.7/howto/argparse.html
 parser = argparse.ArgumentParser()
-parser.add_argument('--path', '-p', default='.\\images')
+parser.add_argument('--path', '-p', default='.\\img_data')
 args = parser.parse_args()
  
 # データ読み込み testデータとtrainデータに分割する
