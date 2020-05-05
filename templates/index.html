@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+  <!-- Form
+  ================================================== -->
+<div class="form">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <p style="margin-left:15px;">
+          しゃしんを　いれると　かいあおり　ポケモンか　どうかが　わかるぞ！
+        </p>
+        {% if result %}
+          {% if result[0][0]['rate'] > 90 %}
+            {% if result[0][0]['label'] == 0 %}
+              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rate']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
+              <div class="col-md-7">
+                <img src={{result[1]}} class="detect_img">
+              </div>
+              <div class="col-md-5">
+                <p class="logo_container">
+                  <img src='./static/images/xp.jpg' height="100" width="100">
+                </p>
+                <p><img src={{result[2]}} class="cut_image"></p>
+                <p class="detail_container">
+                  <はんてい><br>
+                  {{result[0][0]['name']}}：{{result[0][0]['rate']}}%<br>
+                  {{result[0][1]['name']}}：{{result[0][1]['rate']}}%<br>
+                  {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                </p>
+              </div>
+            {% elif result[0][0]['label'] == 1 %}
+              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rate']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
+              <div class="col-md-7">
+                <img src={{result[1]}} class="detect_img">
+              </div>
+              <div class="col-md-5">
+                <p class="logo_container">
+                  <img src='./static/images/noah.jpg' height="100" width="100">
+                </p>
+                <p><img src={{result[2]}} class="cut_image"></p>
+                <p class="detail_container">
+                  <はんてい><br>
+                  {{result[0][0]['name']}}：{{result[0][0]['rate']}}%<br>
+                  {{result[0][1]['name']}}：{{result[0][1]['rate']}}%<br>
+                  {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                </p>
+              </div>
+            {% elif result[0][0]['label'] == 2 %}
+              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rate']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
+              <div class="col-md-7">
+                <img src={{result[1]}} class="detect_img">
+              </div>
+              <div class="col-md-5">
+                <div>
+                  <p class="logo_container"><img src='./static/images/wowbit.jpg' height="100" width="100"></p>
+                  <p><img src={{result[2]}} class="cut_image"></p>
+                  <p class="detail_container">
+                    <はんてい><br>
+                    {{result[0][0]['name']}}：{{result[0][0]['rate']}}%<br>
+                    {{result[0][1]['name']}}：{{result[0][1]['rate']}}%<br>
+                    {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                  </p>
+                </div>
+              </div>
+            {% endif %}
+          {% else %}
+            <h3 style="margin-left:10px;">「どうやら　<span class="red">ポケモンでは　ない</span>　ようじゃ」</h3>
+            <div class="col-md-7">
+              <img src={{result[1]}} class="detect_img">
+            </div>
+            <div class="col-md-5">
+              <p style="margin-top:70px;">
+                　　　だ〜れだ？<br>
+                <img src={{result[2]}} class="cut_image"></p>
+              <p class="detail_container">
+                <はんてい><br>
+                {{result[0][0]['name']}}:{{result[0][0]['rate']}}%<br>
+                {{result[0][1]['name']}}:{{result[0][1]['rate']}}%<br>
+                {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+              </p>
+            </div>
+          {% endif %}
+          <!-- <p>{{result}}</p> -->
+        {% else %}
+          <div class="col-md-12">
+            <h4>すきな　しゃしんを　いれて　くれ！</h4>
+          </div>
+        {% endif %}
+        <div class="col-md-12" style="margin-top:10px; margin-bottom:20px;">
+          <form action="/post" method="post" class="form-inline" enctype = "multipart/form-data">
+            <input type = "file" name = "file" />
+            <button type="submit" class="btn btn-primary" style="margin-top:5px;">やってみる</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
