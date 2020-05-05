@@ -1,0 +1,10 @@
+/.idea/
+/.vscode/
+/pokemon_detector/
+.DS_Store
+/img_data/
+/__pycache__/
+/pokemon_detector.code-workspace/
+/.git/
+mymodel.h5
+/mymodel.h5/
