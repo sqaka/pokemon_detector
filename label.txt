@@ -1,0 +1,4 @@
+wowbit,0
+noah,1
+0_others,2
+xp,3
