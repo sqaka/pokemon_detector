@@ -4,13 +4,16 @@ import numpy as np
  
 import argparse
 import cv2
-from Pillow import Image
+from PIL import Image
 
 # 顔を検出して画像を切り取る
 def faceDetectionFromPath(path, size):
+    # print(f"path: {path}")
     cvImg = cv2.imread(path)
-    cascade_path = "./lib/haarcascade_frontalface_alt.xml"
+    # print(f"cvImg.shape: {cvImg.shape}")
+    cascade_path = "./lib/haarcascade_frontalface_default.xml"
     cascade = cv2.CascadeClassifier(cascade_path)
+    # print(f"cascade.empty(): {cascade.empty()}")
     facerect = cascade.detectMultiScale(cvImg, scaleFactor=1.1, minNeighbors=1, minSize=(1, 1))
     faceData = []
     for rect in facerect:
@@ -18,15 +21,15 @@ def faceDetectionFromPath(path, size):
         resized = cv2.resize(faceImg,None, fx=float(size/faceImg.shape[0]),fy=float(size/faceImg.shape[1]))
         CV_im_RGB = resized[:, :, ::-1].copy()
         pilImg=Image.fromarray(CV_im_RGB)
-        faceData.append(pilImg)
- 
+        faceData.append(pilImg) 
     return faceData
  
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', '-m', default='.\\mymodel.h5', required=True)
-    parser.add_argument('--testpath', '-t', default='.\\images\\shiraishi.jpg')
+    parser.add_argument('--model', '-m', default='./mymodel.h5')
+    parser.add_argument('--testpath', '-t', default='./testimage.png')
     args = parser.parse_args()
+    # print("agrs: ", args)
     
     # ポケモン3種とそれ以外の計4ラベルに分ける
     num_classes = 4
@@ -53,7 +56,7 @@ def main():
         predR = np.round(pred)
         for pre_i in np.arange(len(predR)):
             if predR[pre_i] == 1:
-                print("he/she is {}".format(ident[pre_i]))
+                print("this is {}".format(ident[pre_i]))
  
 if __name__ == '__main__':
     main()

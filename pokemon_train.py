@@ -13,8 +13,8 @@ import argparse
 from load_images import load_images_from_labelFolder
  
 # 最初に定数を指定する
-batch_size = 20 # 一度に学習するデータサイズ
-num_classes = 3 # 分類するラベル数
+batch_size = 128 # 一度に学習するデータサイズ
+num_classes = 4 # 分類するラベル数
 epoch = 30 # 全データを何回学習するか
 
 # inputする画像サイズ。このサイズで素材を切り抜き揃えておく
@@ -23,7 +23,7 @@ img_rows, img_cols = 128, 128
 # 引数 -p にて指定のpathを参照するパーサーを作る
 # https://docs.python.org/ja/3.7/howto/argparse.html
 parser = argparse.ArgumentParser()
-parser.add_argument('--path', '-p', default='.\\img_data')
+parser.add_argument('--path', '-p', default='./img_data/')
 args = parser.parse_args()
  
 # データ読み込み testデータとtrainデータに分割する
@@ -62,7 +62,7 @@ model = Sequential()
 # 中間層
 # Conv2D 3×3のフィルタを各マスにかけ、32枚の出力データを得られるように指定している
 # kernel_size(フィルタ)の部分は省略可能　(Conv2D(32,(3,3))のように
-model.add(Conv2D(32, kernel_size=(3,3),
+model.add(Conv2D(32, kernel_size=(3, 3),
             # relu（Rectified Linear Unit）は、特徴を際立てるための活性化関数
             # https://arakan-pgm-ai.hatenablog.com/entry/2018/11/07/090000
             activation='relu',
@@ -79,7 +79,7 @@ model.add(Dropout(0.2))
 # デフォルトが(1, 1)なので一旦これでよい https://keras.io/ja/layers/convolutional/
 model.add(ZeroPadding2D(padding=(1, 1)))
 # Conv2D 3×3のフィルタを各マスにかけ、96枚の出力データを得られるように指定している
-model.add(Conv2D(96, kernel_size=(3,3),activation='relu'))
+model.add(Conv2D(96, kernel_size=(3, 3), activation='relu'))
 # MaxPooling2Dでフィルタされた画像を圧縮し、出力をダウンスケール
 model.add(MaxPooling2D(pool_size=(2, 2), strides=2))
 # Dropoutを設定し、過学習を防止する
@@ -106,10 +106,10 @@ model.compile(loss=keras.losses.categorical_crossentropy,
                 metrics=['accuracy'])
  
 model.fit(x_train, y_train,
-            batch_size=batch_size,
-            epochs=epoch,
-            verbose=1,
-            validation_data=(x_test, y_test))
+          batch_size=batch_size,
+          epochs=epoch,
+          verbose=1,
+          validation_data=(x_test, y_test))
  
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
