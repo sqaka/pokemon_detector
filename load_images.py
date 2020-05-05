@@ -1,26 +1,28 @@
 import numpy as np
 import glob
 from keras.preprocessing.image import load_img, img_to_array
+import pathlib
 # 正規表現モジュールを利用可能にする。
 # https://note.nkmk.me/python-re-match-search-findall-etc/
-import re
+# import re
  
 def load_images_from_labelFolder(path, img_width, img_height, train_test_ratio=(9,1)):
     pathsAndLabels = []
     label_i = 0
     # globでフォルダの中身をglobする
-    data_list = glob.glob(path + '\\*')
+    data_list = glob.glob(path + '*')
+    print(str(path))
     # ラベル分けのtxtデータを読み込ませる
     datatxt = open('label.txt' ,'w')
     print('data_list', data_list)
     for dataFolderName in data_list:
         pathsAndLabels.append([dataFolderName, label_i])
-        pattern = r".*\\(.*)" #pathが階層を色々含んでいるので、画像が入っているフォルダ名だけを取っている。
-        matchOB = re.finditer(pattern, dataFolderName)
-        directoryname = ""
-        if matchOB:
-            for a in matchOB:
-                directoryname += a.groups()[0]
+        # pattern = r".*/(.*)" #pathが階層を色々含んでいるので、画像が入っているフォルダ名だけを取っている。
+        # matchOB = re.finditer(pattern, dataFolderName)
+        directoryname = pathlib.PurePath(dataFolderName).name
+        # if matchOB:
+            # for a in matchOB:
+                # directoryname += a.groups()[0]
         datatxt.write(directoryname + "," + str(label_i) + "\n") # 誰が何番かテキストで保存しとく
         label_i = label_i + 1
     datatxt.close()
@@ -28,7 +30,7 @@ def load_images_from_labelFolder(path, img_width, img_height, train_test_ratio=(
     for pathAndLabel in pathsAndLabels: # 全画像のパスとそのラベルをタプルでリストにし
         path = pathAndLabel[0]
         label = pathAndLabel[1]
-        imagelist = glob.glob(path + "\\*")
+        imagelist = glob.glob(path + "**/*.png")
         for imgName in imagelist:
             allData.append((imgName, label))
     allData = np.random.permutation(allData) # シャッフルする。
@@ -48,3 +50,7 @@ def load_images_from_labelFolder(path, img_width, img_height, train_test_ratio=(
     train_y = np.array(train_y[:threshold])
  
     return (train_x, train_y), (test_x, test_y)
+
+if __name__ == '__main__':
+    (train_x,train_y),(_,_) = load_images_from_labelFolder('/img_data/', 128, 128)
+    print('trainx.shape:',train_x.shape)
