@@ -6,6 +6,20 @@ import argparse
 import cv2
 from PIL import Image
 
+
+# 再設計中 ========
+HUMAN_NAMES = {
+  0: u"XP　を　あおっていた　ポケモン",
+  1: u"NOAH　を　あおっていた　ポケモン",
+  2: u"Wowbit　を　あおっていた　ポケモン",
+  3: u"どうやら　ポケモン　では　ない",
+}
+
+
+def evaluation(img_path, model_path):
+
+# ==================
+
 # 顔を検出して画像を切り取る
 def faceDetectionFromPath(path, size):
     # print(f"path: {path}")
