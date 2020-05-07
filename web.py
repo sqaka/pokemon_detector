@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# 再設計中
 
 import multiprocessing as mp
 # import numpy as np
@@ -6,9 +7,9 @@ import os
 # import tensorflow as tf
 
 from flask import Flask, render_template, request, redirect, url_for
-# from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
-# from tools import eval
+from pokemon_prediction import faceDetectionFromPath as faceDetect
 
 # インスタンス化
 app = Flask(__name__)
@@ -30,8 +31,8 @@ def post():
         f = request.files['file']
         img_path = os.path.join(UPLOAD_FOLDER, secure_filename(f.filename))
         f.save(img_path)
-        # eval.pyへアップロードされた画像を渡す
-        result = eval.evaluation(img_path, './mymodel.h5')
+        # pokemon_prediction.pyへアップロードされた画像を渡す
+        result = faceDetect(img_path)
     else:
         result = []
     return render_template('index.html', result=result)
