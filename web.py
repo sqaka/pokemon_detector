@@ -9,7 +9,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
-from pokemon_prediction import faceDetectionFromPath as faceDetect
+from tools.face_detector import faceDetectionFromPath as faceDetect
 
 # インスタンス化
 app = Flask(__name__)
@@ -31,14 +31,14 @@ def post():
         f = request.files['file']
         img_path = os.path.join(UPLOAD_FOLDER, secure_filename(f.filename))
         f.save(img_path)
-        # pokemon_prediction.pyへアップロードされた画像を渡す
-        result = faceDetect(img_path)
+        # face_detector.pyへアップロードされた画像を渡す
+        result = faceDetect(img_path, "./tools/mymodel.h5")
     else:
         result = []
     return render_template('index.html', result=result)
   else:
     # エラーの際の挙動
-    return render_template('error.html')
+    return redirect(url_for('error'))
 
 if __name__ == '__main__':
     app.debug = True

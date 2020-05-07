@@ -6,5 +6,5 @@
 /__pycache__/
 /pokemon_detector.code-workspace/
 /.git/
-mymodel.h5
+/tools/mymodel.h5/
 /mymodel.h5/

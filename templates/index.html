@@ -10,9 +10,9 @@
           しゃしんを　いれると　かいあおり　ポケモンか　どうかが　わかるぞ！
         </p>
         {% if result %}
-          {% if result[0][0]['rate'] > 90 %}
+          {% if result[0][0]['rank'] > 90 %}
             {% if result[0][0]['label'] == 0 %}
-              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rate']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
+              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rank']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
               <div class="col-md-7">
                 <img src={{result[1]}} class="detect_img">
               </div>
@@ -23,13 +23,13 @@
                 <p><img src={{result[2]}} class="cut_image"></p>
                 <p class="detail_container">
                   <はんてい><br>
-                  {{result[0][0]['name']}}：{{result[0][0]['rate']}}%<br>
-                  {{result[0][1]['name']}}：{{result[0][1]['rate']}}%<br>
-                  {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                  {{result[0][0]['name']}}：{{result[0][0]['rank']}}%<br>
+                  {{result[0][1]['name']}}：{{result[0][1]['rank']}}%<br>
+                  {{result[0][2]['name']}}：{{result[0][2]['rank']}}%<br>
                 </p>
               </div>
             {% elif result[0][0]['label'] == 1 %}
-              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rate']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
+              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rank']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
               <div class="col-md-7">
                 <img src={{result[1]}} class="detect_img">
               </div>
@@ -40,13 +40,13 @@
                 <p><img src={{result[2]}} class="cut_image"></p>
                 <p class="detail_container">
                   <はんてい><br>
-                  {{result[0][0]['name']}}：{{result[0][0]['rate']}}%<br>
-                  {{result[0][1]['name']}}：{{result[0][1]['rate']}}%<br>
-                  {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                  {{result[0][0]['name']}}：{{result[0][0]['rank']}}%<br>
+                  {{result[0][1]['name']}}：{{result[0][1]['rank']}}%<br>
+                  {{result[0][2]['name']}}：{{result[0][2]['rank']}}%<br>
                 </p>
               </div>
             {% elif result[0][0]['label'] == 2 %}
-              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rate']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
+              <h2 style="margin-left:10px;">「<span class="red">{{result[0][0]['rank']}}</span>パーセント　の　かくりつ　で　<span class="red">{{result[0][0]['name']}}</span>　じゃ！」</h2>
               <div class="col-md-7">
                 <img src={{result[1]}} class="detect_img">
               </div>
@@ -56,9 +56,9 @@
                   <p><img src={{result[2]}} class="cut_image"></p>
                   <p class="detail_container">
                     <はんてい><br>
-                    {{result[0][0]['name']}}：{{result[0][0]['rate']}}%<br>
-                    {{result[0][1]['name']}}：{{result[0][1]['rate']}}%<br>
-                    {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                    {{result[0][0]['name']}}：{{result[0][0]['rank']}}%<br>
+                    {{result[0][1]['name']}}：{{result[0][1]['rank']}}%<br>
+                    {{result[0][2]['name']}}：{{result[0][2]['rank']}}%<br>
                   </p>
                 </div>
               </div>
@@ -74,9 +74,9 @@
                 <img src={{result[2]}} class="cut_image"></p>
               <p class="detail_container">
                 <はんてい><br>
-                {{result[0][0]['name']}}:{{result[0][0]['rate']}}%<br>
-                {{result[0][1]['name']}}:{{result[0][1]['rate']}}%<br>
-                {{result[0][2]['name']}}：{{result[0][2]['rate']}}%<br>
+                {{result[0][0]['name']}}:{{result[0][0]['rank']}}%<br>
+                {{result[0][1]['name']}}:{{result[0][1]['rank']}}%<br>
+                {{result[0][2]['name']}}：{{result[0][2]['rank']}}%<br>
               </p>
             </div>
           {% endif %}
