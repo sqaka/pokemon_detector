@@ -6,6 +6,8 @@ import argparse
 import cv2
 from PIL import Image
 
+from  tools.face_detector import faceDetectionFromPath
+
 # 再設計中 ========
 HUMAN_NAMES = {
   0: u"XP　を　あおっていた　ポケモン",
@@ -17,7 +19,7 @@ HUMAN_NAMES = {
 
 
 # 入力画像をモデルに喰わせて結果を算出 
-def main():
+def prediction():
     # faceData = "./testimage.png"
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', '-m', default='./tools/model_path')
@@ -28,8 +30,7 @@ def main():
     
     # ポケモン3種とそれ以外の計4ラベルに分ける
     num_classes = 4
-    img_rows = 128
-    img_cols = 128
+    img_rows, img_cols = 128, 128
  
     ident = [""] * num_classes
     # label.txt
@@ -50,7 +51,7 @@ def main():
     # モデルを利用し予測する
     # if model_path:
     # 学習後のパラメーターの読み込み
-    model = load_model(model_path)
+    # model = load_model(model_path)
     result = model.predict(imgarray, batch_size=imgarray.shape[0])
   # sess.run(logits)と同じ
    # softmax = logits.eval()

@@ -32,13 +32,13 @@ def post():
         img_path = os.path.join(UPLOAD_FOLDER, secure_filename(f.filename))
         f.save(img_path)
         # face_detector.pyへアップロードされた画像を渡す
-        result = faceDetect(img_path, "./tools/mymodel.h5")
+        result = faceDetect(img_path, './tools/mymodel.h5')
     else:
         result = []
-    return render_template('index.html', result=result)
+        return render_template('index.html', result=result)
   else:
     # エラーの際の挙動
-    return redirect(url_for('error'))
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.debug = True
