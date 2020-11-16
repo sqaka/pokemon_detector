@@ -9,7 +9,6 @@ app/img_data/*
 app/pokemon_detector.code-workspace
 
 app/tools/__pycache__
-app/tools/mymodel.h5
 
 app/static/images/cut_face/*
 app/static/images/default/*
