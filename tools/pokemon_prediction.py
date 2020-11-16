@@ -6,7 +6,7 @@ import argparse
 import cv2
 from PIL import Image
 
-from  tools.face_detector import faceDetectionFromPath
+# from tools.face_detector import faceDetectionFromPath as faceDetect
 
 # 再設計中 ========
 HUMAN_NAMES = {
@@ -19,12 +19,12 @@ HUMAN_NAMES = {
 
 
 # 入力画像をモデルに喰わせて結果を算出 
-def prediction():
+def main():
     # faceData = "./testimage.png"
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', '-m', default='./tools/model_path')
+    parser.add_argument('--model', '-m', default=faceDetect.model_path)
     parser.add_argument('--testpath', '-t', default=faceData)
-    parser.add_argument('--imagepath', '-i', default=img_path)   
+    parser.add_argument('--imagepath', '-i', default=faceDetect.img_path)   
     args = parser.parse_args()
     # print("agrs: ", args)
     
@@ -40,7 +40,7 @@ def prediction():
         ident[int(label)] = dirname
  
     model = load_model(args.model)
-    faceImgs = faceDetectionFromPath(args.testpath, img_rows)
+    faceImgs = faceDetect(args.testpath, img_rows)
     imgarray = []
     for faceImg in faceImgs:
         faceImg.show()
@@ -72,8 +72,8 @@ def prediction():
     rank = sorted(humans, key=lambda x: x['rate'], reverse=True)
 
   # 判定結果と加工した画像のpathを返す
-    return [rank, args.testpath, args.img_path]
-
+    pred_result = [rank, args.testpath, args.img_path]
+    return pred_result
 
     #preds = model.predict(imgarray, batch_size=imgarray.shape[0])
     #for pred in preds:

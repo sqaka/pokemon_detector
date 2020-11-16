@@ -1,0 +1,12 @@
+.idea
+.vscode
+.DS_Store
+.git
+__pycache__
+img_data
+mymodel.h5
+pkmn_mk002.code-workspace
+pokemon_detector.code-workspace
+
+tools/__pycache__
+tools/mymodel.h5

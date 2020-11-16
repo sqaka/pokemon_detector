@@ -8,14 +8,16 @@ import os
 
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 from tools.face_detector import faceDetectionFromPath as faceDetect
+# from tools.face_detector import facePredict as Pred
+
+UPLOAD_FOLDER = './static/images/default/'
 
 # インスタンス化
 app = Flask(__name__)
 app.config['DEBUG'] = True
-# 投稿画像の保存先
-UPLOAD_FOLDER = './static/images/default/'
 
 # ルートアクセス時の挙動を設定
 @app.route("/")
@@ -35,12 +37,15 @@ def post():
         result = faceDetect(img_path, './tools/mymodel.h5')
     else:
         result = []
-        return render_template('index.html', result=result)
+    return render_template('index.html', result=pred_result)
   else:
     # エラーの際の挙動
-    return redirect(url_for('index'))
+    return redirect(url_for('error.html'))
 
-if __name__ == '__main__':
+def main():
     app.debug = True
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
+if __name__ == '__main__':
+    main()
