@@ -4,7 +4,6 @@
 .git
 __pycache__
 img_data
-models
 pkmn_mk002.code-workspace
 pokemon_detector.code-workspace
 
