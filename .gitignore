@@ -3,9 +3,14 @@
 .DS_Store
 .git
 __pycache__
-img_data
 pkmn_mk002.code-workspace
-pokemon_detector.code-workspace
 
-tools/__pycache__
-tools/mymodel.h5
+app/img_data/*
+app/pokemon_detector.code-workspace
+
+app/tools/__pycache__
+app/tools/mymodel.h5
+
+app/static/images/cut_face/*
+app/static/images/default/*
+app/static/images/face_detect/*
