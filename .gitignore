@@ -8,3 +8,4 @@ pkmn_mk002.code-workspace
 pokemon_detector.code-workspace
 
 tools/__pycache__
+tools/mymodel.h5
